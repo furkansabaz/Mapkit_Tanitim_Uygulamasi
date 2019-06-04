@@ -12,10 +12,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager  = CLLocationManager()
+    let bolgeBuyukluk : Double = 12000
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        konumServisKontrol()
     }
     
     
@@ -43,6 +44,9 @@ class ViewController: UIViewController {
             break
         case .authorizedWhenInUse :
             //uygulama sadece kullanım esnasında konum bilgisine erişebilir
+            mapView.showsUserLocation = true
+            mapView.userTrackingMode = .follow
+            konumOdaklan()
             break
         case .denied :
             //kullanıcı izin isteğimizi reddetmiştir veya henüz izin vermemiştir
@@ -58,16 +62,30 @@ class ViewController: UIViewController {
         }
         
     }
+    
+    func konumOdaklan() {
+        
+        if let konum = locationManager.location?.coordinate {
+            let bolge = MKCoordinateRegion.init(center: konum, latitudinalMeters: bolgeBuyukluk, longitudinalMeters: bolgeBuyukluk)
+            mapView.setRegion(bolge, animated: true)
+        }
+    }
 }
 
 extension ViewController : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // Konum güncellenirse tetiklenir
+        guard let konum = locations.last else { return}
+        let merkez = CLLocationCoordinate2D(latitude: konum.coordinate.latitude, longitude: konum.coordinate.longitude)
+        let bolge = MKCoordinateRegion.init(center: merkez, latitudinalMeters: bolgeBuyukluk, longitudinalMeters: bolgeBuyukluk)
+        mapView.setRegion(bolge, animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         //Konuma verilen izin değiştirilirse
+        izinKontrol()
+        
     }
     
 }
