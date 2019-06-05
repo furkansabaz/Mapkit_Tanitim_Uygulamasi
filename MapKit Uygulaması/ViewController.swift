@@ -9,10 +9,12 @@
 import UIKit
 import MapKit
 class ViewController: UIViewController {
-
+    @IBOutlet weak var lblAdres: UILabel!
+    
     @IBOutlet weak var mapView: MKMapView!
     let locationManager  = CLLocationManager()
     let bolgeBuyukluk : Double = 12000
+    var oncekiKonum : CLLocation?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -44,9 +46,7 @@ class ViewController: UIViewController {
             break
         case .authorizedWhenInUse :
             //uygulama sadece kullanım esnasında konum bilgisine erişebilir
-            mapView.showsUserLocation = true
-            mapView.userTrackingMode = .follow
-            konumOdaklan()
+           kullaniciTakip()
             break
         case .denied :
             //kullanıcı izin isteğimizi reddetmiştir veya henüz izin vermemiştir
@@ -62,13 +62,23 @@ class ViewController: UIViewController {
         }
         
     }
-    
+    func kullaniciTakip() {
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        konumOdaklan()
+        oncekiKonum = merkezKordinatlariGetir(mapView: mapView)
+    }
     func konumOdaklan() {
         
         if let konum = locationManager.location?.coordinate {
             let bolge = MKCoordinateRegion.init(center: konum, latitudinalMeters: bolgeBuyukluk, longitudinalMeters: bolgeBuyukluk)
             mapView.setRegion(bolge, animated: true)
         }
+    }
+    func merkezKordinatlariGetir(mapView : MKMapView) -> CLLocation {
+        let latitude = mapView.centerCoordinate.latitude
+        let longitude = mapView.centerCoordinate.longitude
+        return CLLocation(latitude: latitude, longitude: longitude)
     }
 }
 
@@ -88,4 +98,22 @@ extension ViewController : CLLocationManagerDelegate {
         
     }
     
+}
+extension ViewController : MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let merkez = merkezKordinatlariGetir(mapView: mapView)
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.reverseGeocodeLocation(merkez) { (yerIsaretleri, hata) in
+            if let _ = hata {
+                print("Hata Meydana Geldi")
+                return
+            }
+            guard let isaret = yerIsaretleri?.first else {
+                return
+            }
+            
+        }
+    }
 }

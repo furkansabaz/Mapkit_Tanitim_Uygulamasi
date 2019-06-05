@@ -24,17 +24,40 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="H0K-z8-qbM"/>
                                 </connections>
                             </mapView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="konum" translatesAutoresizingMaskIntoConstraints="NO" id="Fzm-h3-f8G">
+                                <rect key="frame" x="187" y="408" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Rrv-am-ajz"/>
+                                    <constraint firstAttribute="width" constant="40" id="kXE-nM-vby"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6c-8d-FBF">
+                                <rect key="frame" x="0.0" y="822" width="414" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="6Qb-Iz-cYB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Bhh-ti-0x4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Aei-2T-Bde"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bhh-ti-0x4" secondAttribute="trailing" id="Bj5-n8-K9z"/>
+                            <constraint firstItem="Fzm-h3-f8G" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-20" id="Od9-qL-Sef"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="z6c-8d-FBF" secondAttribute="bottom" id="S9a-RR-Arl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z6c-8d-FBF" secondAttribute="trailing" id="cMH-T0-Qzf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Bhh-ti-0x4" secondAttribute="bottom" id="fga-tG-p2D"/>
+                            <constraint firstItem="Fzm-h3-f8G" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nqB-a1-W8u"/>
                             <constraint firstItem="Bhh-ti-0x4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="pEb-My-8UL"/>
+                            <constraint firstItem="z6c-8d-FBF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="sga-rD-h8c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="lblAdres" destination="z6c-8d-FBF" id="PoZ-lJ-cZg"/>
                         <outlet property="mapView" destination="Bhh-ti-0x4" id="g7A-rj-zrc"/>
                     </connections>
                 </viewController>
@@ -42,4 +65,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="konum" width="512" height="512"/>
+    </resources>
 </document>
