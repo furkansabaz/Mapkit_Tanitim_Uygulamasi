@@ -103,6 +103,11 @@ extension ViewController : MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let merkez = merkezKordinatlariGetir(mapView: mapView)
+        
+        guard let oncekiKonum = self.oncekiKonum else { return }
+        if merkez.distance(from: oncekiKonum) < 50 {return}
+        self.oncekiKonum = merkez
+        
         let geoCoder = CLGeocoder()
         
         geoCoder.reverseGeocodeLocation(merkez) { (yerIsaretleri, hata) in
@@ -113,6 +118,20 @@ extension ViewController : MKMapViewDelegate {
             guard let isaret = yerIsaretleri?.first else {
                 return
             }
+            
+            let sokakNumarasi = isaret.subThoroughfare ?? "Yok"
+            let sokakAdi = isaret.thoroughfare ?? "Yok"
+            let ulkeAdi = isaret.country ?? "Yok"
+            let ilAdi = isaret.administrativeArea ?? "Yok"
+            let ilceAdi = isaret.locality ?? "Yok"
+            
+            
+            DispatchQueue.main.async {
+                self.lblAdres.text = "\(ilceAdi) / \(ilAdi) / \(ulkeAdi)"
+                print("Sokak Numarası : \(sokakNumarasi)")
+                print("Sokak Adı : \(sokakAdi)")
+            }
+            
             
         }
     }
