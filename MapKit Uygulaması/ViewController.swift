@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     let locationManager  = CLLocationManager()
     let bolgeBuyukluk : Double = 12000
     var oncekiKonum : CLLocation?
+    
+    var rotalar : [MKDirections] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -94,7 +96,7 @@ class ViewController: UIViewController {
         
         let istek = istekOlustur(baslangicKoordinat: baslangicKoordinat)
         let rotalar = MKDirections(request: istek)
-        
+        mapViewTemizle(yeniRota: rotalar)
         rotalar.calculate { (cevap, hata) in
             
             guard let cevap = cevap else {return}
@@ -125,6 +127,13 @@ class ViewController: UIViewController {
         return istek
     }
     
+    func mapViewTemizle(yeniRota : MKDirections) {
+        mapView.removeOverlays(mapView.overlays)
+        rotalar.append(yeniRota)
+        let _ = rotalar.map { $0.cancel() }
+    }
+    
+    
 }
 
 extension ViewController : CLLocationManagerDelegate {
@@ -154,7 +163,7 @@ extension ViewController : MKMapViewDelegate {
         self.oncekiKonum = merkez
         
         let geoCoder = CLGeocoder()
-        
+        geoCoder.cancelGeocode()
         geoCoder.reverseGeocodeLocation(merkez) { (yerIsaretleri, hata) in
             if let _ = hata {
                 print("Hata Meydana Geldi")
