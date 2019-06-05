@@ -11,6 +11,7 @@ import MapKit
 class ViewController: UIViewController {
     @IBOutlet weak var lblAdres: UILabel!
     
+    @IBOutlet weak var btnGit: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     let locationManager  = CLLocationManager()
     let bolgeBuyukluk : Double = 12000
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         konumServisKontrol()
+        btnGit.layer.cornerRadius = 20
     }
     
     
@@ -80,6 +82,49 @@ class ViewController: UIViewController {
         let longitude = mapView.centerCoordinate.longitude
         return CLLocation(latitude: latitude, longitude: longitude)
     }
+    
+    
+    @IBAction func btnGitTikla(_ sender: Any) {
+        rotaBelirle()
+    }
+    
+    func rotaBelirle(){
+        
+        guard let baslangicKoordinat = locationManager.location?.coordinate else { return }
+        
+        let istek = istekOlustur(baslangicKoordinat: baslangicKoordinat)
+        let rotalar = MKDirections(request: istek)
+        
+        rotalar.calculate { (cevap, hata) in
+            
+            guard let cevap = cevap else {return}
+            
+            for rota in cevap.routes {
+                self.mapView.addOverlay(rota.polyline)
+                self.mapView.setVisibleMapRect(rota.polyline.boundingMapRect, animated: true)
+                
+            }
+        }
+        
+    }
+    
+    func istekOlustur(baslangicKoordinat : CLLocationCoordinate2D) -> MKDirections.Request {
+        
+        let hedefKoordinat = merkezKordinatlariGetir(mapView: mapView).coordinate
+        let baslangicNoktasi = MKPlacemark(coordinate: baslangicKoordinat)
+        
+        let hedefNoktasi = MKPlacemark(coordinate: hedefKoordinat)
+        
+        let istek = MKDirections.Request()
+        
+        istek.source = MKMapItem(placemark: baslangicNoktasi)
+        istek.destination = MKMapItem(placemark: hedefNoktasi)
+        istek.transportType = .automobile
+        istek.requestsAlternateRoutes = true
+        
+        return istek
+    }
+    
 }
 
 extension ViewController : CLLocationManagerDelegate {
@@ -134,5 +179,15 @@ extension ViewController : MKMapViewDelegate {
             
             
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
+        renderer.strokeColor = .blue
+        renderer.lineWidth = 8
+        renderer.lineCap = .square
+        return renderer
+        
     }
 }

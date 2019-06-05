@@ -41,12 +41,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="au6-x1-wvj">
+                                <rect key="frame" x="314" y="759" width="80" height="53"/>
+                                <color key="backgroundColor" red="0.95062658629999996" green="0.33185220970000001" blue="0.19785843689999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="30"/>
+                                <state key="normal" title="  GİT  ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnGitTikla:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hf9-RN-v1D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Bhh-ti-0x4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Aei-2T-Bde"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bhh-ti-0x4" secondAttribute="trailing" id="Bj5-n8-K9z"/>
+                            <constraint firstItem="z6c-8d-FBF" firstAttribute="top" secondItem="au6-x1-wvj" secondAttribute="bottom" constant="10" id="Gz9-Ow-ZpV"/>
                             <constraint firstItem="Fzm-h3-f8G" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-20" id="Od9-qL-Sef"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="au6-x1-wvj" secondAttribute="trailing" constant="20" id="P1c-ly-PYI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="z6c-8d-FBF" secondAttribute="bottom" id="S9a-RR-Arl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z6c-8d-FBF" secondAttribute="trailing" id="cMH-T0-Qzf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Bhh-ti-0x4" secondAttribute="bottom" id="fga-tG-p2D"/>
@@ -57,6 +70,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="btnGit" destination="au6-x1-wvj" id="mwt-UN-jhf"/>
                         <outlet property="lblAdres" destination="z6c-8d-FBF" id="PoZ-lJ-cZg"/>
                         <outlet property="mapView" destination="Bhh-ti-0x4" id="g7A-rj-zrc"/>
                     </connections>
